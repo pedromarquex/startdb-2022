@@ -8,7 +8,7 @@ class Forca {
   }
 
   // se a letra estiver na palavra secreta, substitui o "_" pelo caractere na palavra
-  substituirLetra(letra) {
+  substituirLetraNaPalavra(letra) {
     if (this.palavraSecreta.includes(letra)) {
       for (let i = 0; i < this.palavraSecreta.length; i += 1) {
         if (this.palavraSecreta[i] === letra) {
@@ -55,7 +55,7 @@ class Forca {
       return;
     }
 
-    this.substituirLetra(letra);
+    this.substituirLetraNaPalavra(letra);
 
     this.verificaSeGanhou();
   }
