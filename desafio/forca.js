@@ -7,8 +7,34 @@ class Forca {
     this.estadoDoJogo = "aguardando chute";
   }
 
+  // se a letra estiver na palavra secreta, substitui o "_" pelo caractere na palavra
+  substituirLetra(letra) {
+    if (this.palavraSecreta.includes(letra)) {
+      for (let i = 0; i < this.palavraSecreta.length; i += 1) {
+        if (this.palavraSecreta[i] === letra) {
+          this.palavra[i] = letra;
+        }
+      }
+    }
+  }
+
+  // se a palavra nao tiver "_", entao ganhou
+  verificaSeGanhou() {
+    if (!this.palavra.includes("_")) {
+      this.estadoDoJogo = "ganhou";
+    }
+  }
+
+  // se as vidas chegaram a 0, entao perdeu
+  verificaSePerdeu() {
+    if (this.vidas === 0) {
+      this.estadoDoJogo = "perdeu";
+      return true;
+    }
+    return false;
+  }
+
   chutar(letra) {
-    // se chutou mais de uma letra ignora a rodada
     if (letra.length > 1) {
       return;
     }
@@ -18,33 +44,20 @@ class Forca {
       return;
     }
 
-    // adiciona uma letra ao array de letras chutadas
     this.letrasChutadas.push(letra);
 
-    // se a letra não estiver na palavra secreta, decrementa a vida
+    // se a letra não estiver na palavra secreta, perde uma vida
     if (!this.palavraSecreta.includes(letra)) {
       this.vidas -= 1;
     }
 
-    // verifica se perdeu
-    if (this.vidas === 0) {
-      this.estadoDoJogo = "perdeu";
+    if (this.verificaSePerdeu()) {
       return;
     }
 
-    // se a letra estiver na palavra secreta, substitui o "_" pelo caractere na palavra
-    if (this.palavraSecreta.includes(letra)) {
-      for (let i = 0; i < this.palavraSecreta.length; i += 1) {
-        if (this.palavraSecreta[i] === letra) {
-          this.palavra[i] = letra;
-        }
-      }
-    }
+    this.substituirLetra(letra);
 
-    // se após o chute a palavra nao tiver "_" ganhou
-    if (!this.palavra.includes("_")) {
-      this.estadoDoJogo = "ganhou";
-    }
+    this.verificaSeGanhou();
   }
 
   buscarEstado() {
