@@ -35,12 +35,9 @@ class Forca {
   }
 
   chutar(letra) {
-    if (letra.length > 1) {
-      return;
-    }
-
+    // se for chutada mais de uma letra, ignora a rodada
     // se a letra já estiver no array ignora a rodada
-    if (this.letrasChutadas.includes(letra)) {
+    if (letra.length > 1 || this.letrasChutadas.includes(letra)) {
       return;
     }
 
